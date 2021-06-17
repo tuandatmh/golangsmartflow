@@ -254,9 +254,9 @@ func (c *Client) GetTask(params map[string]string) interface{} {
 //   - wfs_id
 //   - id
 //   - element_id
-func (c *Client) UploadFile(params map[string]string) []byte {
+func (c *Client) UploadFile(params map[string]string) interface{} {
 	resp := c.RequestByForm("POST", "/upload_image/en", params)
-	return resp
+	return ConvertToStruct(resp)
 }
 
 func (c *Client) DeleteImage(attachmentId string) interface{} {
