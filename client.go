@@ -80,7 +80,7 @@ func (c *Client) RequestByForm(method, endpoint string, params map[string]string
 		file, err := os.Open(params["file"])
 		if err != nil {
 			log.Println(err)
-			return []byte(err)
+			return []byte(``)
 		}
 		contentType := func() string {
 			defer func() {
@@ -106,13 +106,16 @@ func (c *Client) RequestByForm(method, endpoint string, params map[string]string
 		delete(params, "file")
 	}
 
+	fmt.Println("hhhh")
+	fmt.Println(params)
+
 	for key, val := range params {
 		_ = writer.WriteField(key, val)
 	}
 	err := writer.Close()
 	if err != nil {
 		log.Println(err)
-		return []byte(err)
+		return []byte(``)
 	}
 
 	req, requestErr := http.NewRequest(method, c.BaseUrl+endpoint, body)
@@ -126,7 +129,7 @@ func (c *Client) RequestByForm(method, endpoint string, params map[string]string
 	resp, err := client.Do(req)
 	if err != nil {
 		log.Println(err)
-		return []byte(err)
+		return []byte(``)
 	}
 
 	return c.parseBody(resp)
